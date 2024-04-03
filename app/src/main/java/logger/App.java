@@ -5,7 +5,7 @@ public class App {
      * Let's use this for testing
      */
     public static void main(String[] args) {
-        Logger logger = Logger.getLogger();
+        Logger logger = Logger.getLogger("App.main()");
         logger.log("some");
         logger.log("message");
         logger.log("should");

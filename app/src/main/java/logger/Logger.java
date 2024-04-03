@@ -27,6 +27,7 @@ public class Logger extends Thread {
         if (logger == null) {
             logger = new Logger("~." + path);
         }
+		logger.start();
         return logger;
 	}
 	
@@ -67,7 +68,7 @@ public class Logger extends Thread {
 						log = queue.poll();
 						if (log == null)
 						    continue;
-						System.out.println(log.print(path, null));
+						System.out.println(log.print(path, LoggingMode.FULL));
 					}
 				}
 			}

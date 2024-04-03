@@ -20,13 +20,13 @@ public class Log {
         if (mode == null) mode = LoggingMode.INFO;
         switch (mode) {
             case INFO:
-                return SEPARATOR + message;
+                return path + SEPARATOR + message;
             case DEBUG:
-                return SEPARATOR + path + SEPARATOR + message;
+                return path + SEPARATOR + message;
             case FULL:
-                return SEPARATOR + path + SEPARATOR + message;
+                return path + SEPARATOR + printTime() + SEPARATOR + message;
             default:
-                return SEPARATOR + path + SEPARATOR + message;
+                return path + SEPARATOR + message;
         }
     }
 }
