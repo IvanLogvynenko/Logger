@@ -3,7 +3,9 @@ package logger;
 public enum LoggingMode {
     INFO(0),
     DEBUG(1),
-    FULL(2);
+    FULL(2),
+    WARNING(3),
+    ERROR(4);
 
     private int value;
 

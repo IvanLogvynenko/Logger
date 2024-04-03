@@ -20,11 +20,15 @@ public class Log {
         if (mode == null) mode = LoggingMode.INFO;
         switch (mode) {
             case INFO:
-                return path + SEPARATOR + message;
+                return message;
             case DEBUG:
                 return path + SEPARATOR + message;
             case FULL:
                 return path + SEPARATOR + printTime() + SEPARATOR + message;
+            case WARNING:
+                return "Warning: " + this.print(path, LoggingMode.FULL);
+            case ERROR:
+                return "Error: " + this.print(path, LoggingMode.FULL);
             default:
                 return path + SEPARATOR + message;
         }
