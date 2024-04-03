@@ -48,27 +48,37 @@ public class Logger extends Thread {
 	@Override
 	public void run() {
 		while (!shutdown.get()) {
+			boolean queueEmpty = false;
 			synchronized (queue) {
-				if (queue.isEmpty())
-					try {
-						synchronized (this) {
-							this.wait();
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				queueEmpty = queue.isEmpty();
+			}
+			if (queueEmpty)
+				try {
+					synchronized (this) {
+						this.wait();
 					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			else {
+				Log log;
+				synchronized (queue) {
+					while (!queue.isEmpty()) {
+						log = queue.poll();
+						if (log == null)
+						    continue;
+						System.out.println(log.print(path, null));
+					}
+				}
 			}
-			Log log;
-			synchronized (queue) {
-				log = queue.poll();
-			}
-			if (log != null)
-				System.out.println(log.print(path, null));
 		}
 	}
 
 	public void flush() {
 		shutdown.set(true);
+		synchronized (this) {
+			this.notify();
+        }
 	}
 	
 }

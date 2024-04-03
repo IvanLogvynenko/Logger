@@ -13,6 +13,6 @@ public class App {
         logger.log("in");
         logger.log("the");
         logger.log("console");
-        // logger.flush();
+        logger.flush();
     }
 }
