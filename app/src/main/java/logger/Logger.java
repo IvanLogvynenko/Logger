@@ -8,7 +8,7 @@ public class Logger extends Thread {
     // * Singleton(((
     private static Logger logger = null;
 
-    private Queue<Log> queue = new LinkedBlockingQueue<>();
+    private final Queue<Log> queue = new LinkedBlockingQueue<>();
 
     private String path = "";
 
@@ -19,15 +19,15 @@ public class Logger extends Thread {
     public static Logger getLogger() {
         if (logger == null) {
             logger = new Logger("~");
+			logger.start();
         }
-		logger.start();
         return logger;
     }
 	public static Logger getLogger(String path) {
         if (logger == null) {
             logger = new Logger("~." + path);
+			logger.start();
         }
-		logger.start();
         return logger;
 	}
 	
@@ -44,12 +44,12 @@ public class Logger extends Thread {
 	}
 
 
-	private AtomicBoolean shutdown = new AtomicBoolean(false);
+	private final AtomicBoolean shutdown = new AtomicBoolean(false);
 	
 	@Override
 	public void run() {
 		while (!shutdown.get()) {
-			boolean queueEmpty = false;
+			boolean queueEmpty;
 			synchronized (queue) {
 				queueEmpty = queue.isEmpty();
 			}

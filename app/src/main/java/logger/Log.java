@@ -3,7 +3,7 @@ package logger;
 import java.time.LocalDateTime;
 
 public class Log {
-    private String message;
+    private final String message;
 
     public Log(String message) {
         this.message = message;
@@ -18,19 +18,13 @@ public class Log {
 
     public String print(String path, LoggingMode mode) {
         if (mode == null) mode = LoggingMode.INFO;
-        switch (mode) {
-            case INFO:
-                return message;
-            case DEBUG:
-                return path + SEPARATOR + message;
-            case FULL:
-                return path + SEPARATOR + printTime() + SEPARATOR + message;
-            case WARNING:
-                return "Warning: " + this.print(path, LoggingMode.FULL);
-            case ERROR:
-                return "Error: " + this.print(path, LoggingMode.FULL);
-            default:
-                return path + SEPARATOR + message;
-        }
+        return switch (mode) {
+            case INFO -> message;
+            case DEBUG -> path + SEPARATOR + message;
+            case FULL -> path + SEPARATOR + printTime() + SEPARATOR + message;
+            case WARNING -> "Warning: " + this.print(path, LoggingMode.FULL);
+            case ERROR -> "Error: " + this.print(path, LoggingMode.FULL);
+            default -> path + SEPARATOR + message;
+        };
     }
 }
